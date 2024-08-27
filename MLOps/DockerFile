@@ -1,0 +1,7 @@
+FROM python:3.8
+WORKDIR /iris-demo
+COPY . /iris-demo
+RUN pip install -r requirements.txt 2>&1 || { echo "Failed to install dependencies"; exit 1; }
+EXPOSE 8000
+LABEL authors="Alex Shavaliev"
+ENTRYPOINT ["./docker-entrypoint.sh"]

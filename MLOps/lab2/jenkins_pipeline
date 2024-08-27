@@ -1,0 +1,31 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+    stages {
+        stage('Informing') {
+            steps {
+                echo '--- Environment info ---'
+                sh 'python3 --version'
+                sh 'python3 -m pip --version'
+            }
+        }
+        stage('Getting repo') {
+            steps {
+                echo 'clone the repo'
+                sh 'rm -fr First_MLOps_Project'
+                sh 'rm -fr requirements.txt'
+                sh 'git clone https://github.com/Ashav1309/First_MLOps_Project.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'stage 2 here'
+                sh 'python3 -m pip freeze > ./First_MLOps_Project/requirements.txt'
+                sh 'python3 -m pip install -r ./First_MLOps_Project/requirements.txt'
+                sh 'chmod u+x ./First_MLOps_Project/lab1/pipeline.sh'
+                sh './First_MLOps_Project/lab1/pipeline.sh'
+            }
+        }
+    }
+}
